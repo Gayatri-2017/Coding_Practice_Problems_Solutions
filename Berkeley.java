@@ -33,7 +33,7 @@ class Berkeley{
 
 		double sum = 0, average = 0;
 
-		System.out.println("timeDifference is");
+		System.out.println("\nThe difference in time between slave and master: (in seconds)");
 		for (int i=0; i<noOfProcesses-1; i++) {
 			System.out.println("For slave " + i);
 			System.out.println(timeDifference[i]);
@@ -41,19 +41,19 @@ class Berkeley{
 		}
 
 		average = sum/noOfProcesses;
-		System.out.println("Average = " + average);
+		System.out.println("\nAverage = " + average);
 
 		double offsetTime[] = new double[noOfProcesses-1];
 		computeOffsetTime(average, timeDifference, offsetTime, noOfProcesses);
 
 		masterTime += average;
 		adjustTime(slaveTime, offsetTime, noOfProcesses);
-		System.out.println("After Synchronization:");
-		System.out.println("Time at master is " + masterTime);
+		System.out.println("\nAfter Synchronization:");
+		System.out.println("Time at master is " + convertSecondsToString(masterTime));
 		System.out.println("Time at slaves is ");
 		for (int i=0; i<noOfProcesses-1; i++) {
 			System.out.println("For slave " + i);
-			System.out.println(slaveTime[i]);
+			System.out.println(convertSecondsToString(slaveTime[i]));
 		}
 	}
 
@@ -80,13 +80,22 @@ class Berkeley{
 		String timeStringArray[] = timeString.split(":");
 		double time[] = new double[3];
 
-		System.out.println("hh:mm:ss");
+		//System.out.println("hh:mm:ss");
 		for (int i=0; i<3; i++) {
 			time[i] = Double.valueOf(timeStringArray[i]);
-			System.out.print(time[i] + " : ");
+			//System.out.print(time[i] + " : ");
 		}
-		System.out.println();
+		//System.out.println();
 		return time[0]*3600 + time[1]*60 + time[2];
 	}
 
+	static String convertSecondsToString(double seconds){
+		int hr = (int)seconds / 3600;
+		seconds %= 3600;
+
+		int min = (int)seconds / 60;
+		seconds %= 60;
+
+		return hr + ":" + min + ":" + (int)seconds;
+	}
 }
