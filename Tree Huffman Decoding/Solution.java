@@ -1,3 +1,17 @@
+/*
+
+https://www.hackerrank.com/challenges/tree-huffman-decoding/problem
+
+The tree is made by their hidden stub. Hence, the sample input may not give the sample or expected output.
+
+Sample Input:
+s="1001011"
+
+Sample Output:
+ABACA
+*/
+
+
 import java.util.*;
 /* 
 abstract class Node implements Comparable<Node> {
