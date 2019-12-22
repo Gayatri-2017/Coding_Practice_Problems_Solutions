@@ -2,6 +2,9 @@
 /*
 Given number of edges 'E' and vertices 'V' of a bidirectional graph. 
 Your task is to build a graph through adjacency list and print the adjacency list for each vertex.
+
+https://practice.geeksforgeeks.org/problems/print-adjacency-list/0
+
 */
 import java.util.*;
 import java.lang.*;
