@@ -1,11 +1,9 @@
 '''
 Write an immutable function that merges the following inputs into a single list.
-
 Inputs
 - Original list of strings
 - List of strings to be added
 - List of strings to be removed
-
 Return
 - List shall only contain unique values
 - List shall be ordered as follows
@@ -14,10 +12,8 @@ Return
 '''
 
 def string_merge(orig_list, add_list, remove_list):
-	orig_list += [elem for elem in add_list if elem not in orig_list]
-
-	# Assumming values in the remove_list are present in the orig_list
-	orig_list = [elem for elem in orig_list if elem not in remove_list]
+	
+	orig_list = list((set(orig_list)|set(add_list))-set(remove_list))
 
 	orig_list.sort(reverse=True)
 	orig_list.sort(key=len, reverse=True)
