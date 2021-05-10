@@ -1,3 +1,7 @@
+# https://leetcode.com/problems/ugly-number/
+
+# Facing TLE issues
+  
 class Solution:
   def isUgly(self, n: int) -> bool:
     if n<=0:
