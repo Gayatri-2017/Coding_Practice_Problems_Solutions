@@ -15,8 +15,10 @@ class Solution:
             is_composite[0] = True
             
         for prime in range(2, len(is_composite)):
-            for i in range(prime*prime, len(is_composite), prime):
-                is_composite[i] = True
+            
+            if is_composite[prime] == False:
+                for i in range(prime*prime, len(is_composite), prime):
+                    is_composite[i] = True
             
         count = len([prime for prime in is_composite if prime==False])
         
