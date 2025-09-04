@@ -105,3 +105,47 @@ from max_score_per_proj
 where rn = 1 
 order by project_id asc)
 select * from final_result
+
+-- Solution posted on LinkedIn
+
+WITH CandidateProjectMatch AS (
+  SELECT 
+    p.project_id,
+    c.candidate_id,
+    COUNT(*) AS matched_skills,
+    SUM(
+      CASE 
+        WHEN c.proficiency > p.importance THEN 10
+        WHEN c.proficiency < p.importance THEN -5
+        ELSE 0
+      END
+    ) AS skill_score
+  FROM Projects p
+  JOIN Candidates c 
+    ON p.skill = c.skill
+  GROUP BY p.project_id, c.candidate_id
+),
+ProjectSkillCount AS (
+  SELECT project_id, COUNT(*) AS total_skills
+  FROM Projects
+  GROUP BY project_id
+),
+ScoredCandidates AS (
+  SELECT 
+    m.project_id,
+    m.candidate_id,
+    100 + m.skill_score AS total_score
+  FROM CandidateProjectMatch m
+  JOIN ProjectSkillCount p
+    ON m.project_id = p.project_id
+  WHERE m.matched_skills = p.total_skills
+),
+RankedCandidates AS (
+  SELECT *,
+    ROW_NUMBER() OVER(PARTITION BY project_id ORDER BY total_score DESC, candidate_id ASC) AS rn
+  FROM ScoredCandidates
+)
+SELECT project_id, candidate_id, total_score AS score
+FROM RankedCandidates
+WHERE rn = 1
+ORDER BY project_id;
