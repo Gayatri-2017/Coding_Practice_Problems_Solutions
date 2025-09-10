@@ -42,6 +42,7 @@
 
 -- https://leetcode.com/problems/product-price-at-a-given-date/description/?envType=study-plan-v2&envId=top-sql-50
 
+-- # Write your MySQL query statement below
 WITH past_changes AS (
     SELECT product_id
         , new_price AS price
@@ -52,7 +53,6 @@ WITH past_changes AS (
 )
 , future_changes AS (
     SELECT DISTINCT product_id
-            , new_price as price
             , MIN(change_date) OVER (PARTITION BY product_id) AS min_change_date
     FROM Products
 )
@@ -60,8 +60,8 @@ SELECT product_id
     , price
 FROM past_changes
 WHERE max_change_date = change_date
-UNION
+UNION ALL
 SELECT product_id
-    , 10 AS price
+    , 10 as price
 FROM future_changes
 WHERE min_change_date > "2019-08-16"
